@@ -11,6 +11,11 @@ class Row(dict):
             list(self.values()) + list(other.values())
         )
 
+    def __eq__(self, other):
+        if type(other) == Row:
+            return list(self.keys()) == list(other.keys()) and list(self.values()) == list(other.values())
+        return super().__eq__(other)
+
     def __getitem__(self, k):
         if type(k) is list:
             return list(map(lambda id: self[id], k))
@@ -25,10 +30,10 @@ class Row(dict):
         return list(self.keys())
 
     def join(self, other, by, outer=False, lsuffix="_1", rsuffix="_2"):
-        assert by in self and by in other, f"{by} column does not exist"
+        assert by in self and by in other, f"Column {by} does not exist"
         if self[by] == other[by] or outer:
-            cols1 = list(filter(lambda col: col is not by, self.keys()))
-            cols2 = list(filter(lambda col: col is not by, other.keys()))
+            cols1 = list(filter(lambda col: col != by, self.keys()))
+            cols2 = list(filter(lambda col: col != by, other.keys()))
             duplicates = set(cols1) & set(cols2)
             row = (
                 Row([by], [self[by] or other[by]])

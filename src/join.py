@@ -1,13 +1,16 @@
 import csv
 import logging
-from .row import Row, empty
+import sys
+import os
+
+from src.row import Row, empty
 
 def join(file1, file2, by, type = "inner", lsuffix = "_1", rsuffix = "_2"):
     csv_reader1 = csv.reader(file1)
     columns1 = next(csv_reader1)
     csv_reader2 = csv.reader(file2)
     columns2 = next(csv_reader2)
-    columns = empty(columns1).join(empty(columns2), "i")[0].columns()
+    columns = empty(columns1).join(empty(columns2), by)[0].columns()
     yield columns
 
     left, right = get_type(type)

@@ -10,7 +10,6 @@ def parse_args(args):
     parser.add_argument('file_path_2', help='file path to second file')
     parser.add_argument('column_name', help='name of column used to join operation')
     parser.add_argument('join_type', default="inner", nargs='?', help='type of join')
-    print(parser.parse_args(args))
     return parser.parse_args(args)
 
 
