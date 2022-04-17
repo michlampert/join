@@ -18,22 +18,28 @@ class JoinTest(unittest.TestCase):
         file12 = open("./test/files/file12inner.csv")
         self.assertListEqual(
             list(join(self.file1, self.file2, "id", type="inner")),
-            list(csv.reader(file12))
+            list(csv.reader(file12)),
+            "tables should be equal"
         )
+        file12.close()
 
     def test_left_join(self):
         file12 = open("./test/files/file12left.csv")
         self.assertListEqual(
             list(join(self.file1, self.file2, "id", type="left")),
-            list(csv.reader(file12))
+            list(csv.reader(file12)),
+            "tables should be equal"
         )
+        file12.close()
 
     def test_right_join(self):
         file12 = open("./test/files/file12right.csv")
         self.assertListEqual(
             list(join(self.file1, self.file2, "id", type="right")),
-            list(csv.reader(file12))
+            list(csv.reader(file12)),
+            "tables should be equal"
         )
+        file12.close()
 
 
 if __name__ == '__main__':

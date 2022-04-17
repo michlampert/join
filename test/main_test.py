@@ -19,8 +19,11 @@ class MainTest(unittest.TestCase):
         file12 = open("./test/files/file12inner.csv")
         self.assertListEqual(
             list(csv.reader(file12)),
-            list(csv.reader(output))
+            list(csv.reader(output)),
+            "tables should be equal"
         )
+        output.close()
+        file12.close()
 
     def test_main_left(self):
         os.system(
@@ -29,8 +32,11 @@ class MainTest(unittest.TestCase):
         file12 = open("./test/files/file12left.csv")
         self.assertListEqual(
             list(csv.reader(file12)),
-            list(csv.reader(output))
+            list(csv.reader(output)),
+            "tables should be equal"
         )
+        output.close()
+        file12.close()
 
     def test_main_right(self):
         os.system(
@@ -39,8 +45,11 @@ class MainTest(unittest.TestCase):
         file12 = open("./test/files/file12right.csv")
         self.assertListEqual(
             list(csv.reader(file12)),
-            list(csv.reader(output))
+            list(csv.reader(output)),
+            "tables should be equal"
         )
+        output.close()
+        file12.close()
 
 
 if __name__ == '__main__':
