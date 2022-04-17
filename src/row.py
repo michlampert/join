@@ -1,4 +1,10 @@
 class Row(dict):
+    '''
+    Class used to process lines from .csv files.
+
+    It is a subclass of standard dictionary, so it keep order of entries.
+    '''
+
     def __init__(self, columns=[], values=[]):
         super().__init__(zip(columns, values))
 
@@ -17,6 +23,9 @@ class Row(dict):
         return super().__eq__(other)
 
     def __getitem__(self, k):
+        '''
+        Extended implementation allows to get some subset of values, like in `pandas.Dataframe`. In particular, it can be used to change columns order.
+        '''
         if type(k) is list:
             return list(map(lambda id: self[id], k))
         return super().__getitem__(k)
@@ -30,6 +39,19 @@ class Row(dict):
         return list(self.keys())
 
     def join(self, other, by, outer=False, lsuffix="_1", rsuffix="_2"):
+        '''
+        Enables joining two rows by one column
+
+        `other` - other `Row` object
+
+        `by` - name of column by which two rows will be joined
+
+        `outer` - used to create incomplete rows for [left|right] outer joins
+
+        `lsuffix`, `rsuffix` - suffixes added in case of column name colision
+
+        return `(True, new_row)` if operation can be performed or `(False, None)` in the otherwise.
+        '''
         assert by in self and by in other, f"Column {by} does not exist"
         if self[by] == other[by] or outer:
             cols1 = list(filter(lambda col: col != by, self.keys()))
